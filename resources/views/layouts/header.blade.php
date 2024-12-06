@@ -1,201 +1,98 @@
-<header class="navbar navbar-expand-md navbar-overlap d-print-none">
-    <div class="container-xl">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu"
-            aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+<aside class="navbar navbar-vertical navbar-expand-lg" data-bs-theme="dark">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-menu" aria-controls="sidebar-menu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
-            <a href="{{ route('dashboard') }}">
-                <img src="{{ asset('img/Logo_Emprega+.png') }}" width="110" height="32" alt="Logo"
-                    class="navbar-brand-image">
+        <h1 class="navbar-brand navbar-brand-autodark">
+            <a href=".">
+                <img src="./img/logo.svg" width="110" height="32" alt="Emprega+" class="navbar-brand-image">
             </a>
         </h1>
-
-        <div class="collapse navbar-collapse" id="navbar-menu">
-            <div class="d-flex flex-column flex-md-row flex-fill align-items-stretch align-items-md-center">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('dashboard') }}">
-                            <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                    stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
-                                    <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-                                    <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
-                                </svg>
-                            </span>
-                            <span class="nav-link-title">
-                                Home
-                            </span>
-                        </a>
-                    </li>
-
-                    <!-- Dropdown Menu -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                <i class="fas fa-cogs"></i> <!-- Ícone de Gestão -->
-                            </span>
-                            <span class="nav-link-title">
-                                Gestão
-                            </span>
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li>
-                                <a class="dropdown-item" href="{{ route('users.list') }}">
-                                    <i class="fas fa-user-plus me-2"></i> Utilizadores
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="{{ route('courses.index') }}">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2" width="24"
-                                        height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                        fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M3 6l9 6l9 -6l-9 -4l-9 4v12l9 4l9 -4v-12" />
-                                        <path d="M3 12l9 6l9 -6" />
-                                    </svg>
-                                    Curso
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="{{ route('classes.index') }}">
-                                    <i class="fas fa-chalkboard-teacher me-2"></i> Turma
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('friends.index') }}">
-                            <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                <i class="fas fa-user-friends"></i> <!-- Ícone de Amigos -->
-                            </span>
-                            <span class="nav-link-title">
-                                Amigos
-                            </span>
-                        </a>
-                    </li>
-                </ul>
-
-                <div class="d-flex ms-auto">
-                    <!-- MENSAGENS -->
-                    <div class="nav-item d-none d-md-flex me-3" title="Mensagens">
-                        <a href="{{ route('chats.index') }}" class="nav-link px-0" aria-label="Show messages">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M3 21v-13a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v13l-4 -4h-10l-4 4" />
-                                <line x1="8" y1="9" x2="16" y2="9" />
-                                <line x1="8" y1="13" x2="14" y2="13" />
+        <div class="collapse navbar-collapse" id="sidebar-menu">
+            <ul class="navbar-nav pt-lg-3">
+                <!-- Home -->
+                <li class="nav-item">
+                    <a class="nav-link" href="./">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+                                <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+                                <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
                             </svg>
-                        </a>
-                    </div>
-                    <!-- FIM MENSAGENS -->
-
-                    <!-- NOTIFICAcoes -->
-                    <div class="nav-item dropdown d-none d-md-flex me-3" title="Notificações">
-                        <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1"
-                            aria-label="Show notifications">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path
-                                    d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
-                                <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
+                        </span>
+                        <span class="nav-link-title">Home</span>
+                    </a>
+                </li>
+                <!-- Profile -->
+                <li class="nav-item">
+                    <a class="nav-link" href="./profile">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M12 12c2.8 0 5 2.2 5 5s-2.2 5 -5 5s-5 -2.2 -5 -5s2.2 -5 5 -5z" />
+                                <path d="M12 2c-2.8 0 -5 2.2 -5 5s2.2 5 5 5s5 -2.2 5 -5s-2.2 -5 -5 -5z" />
                             </svg>
-                            <span class="badge bg-red"></span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-end dropdown-menu-card">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title">Notificações</h3>
-                                </div>
-                                <div class="list-group list-group-flush list-group-hoverable">
-                                    <div class="list-group-item">
-                                        <div class="row align-items-center">
-                                            <div class="col-auto"><span
-                                                    class="status-dot status-dot-animated bg-red d-block"></span>
-                                            </div>
-                                            <div class="col text-truncate">
-                                                <a href="#" class="text-body d-block">Example 1</a>
-                                                <div class="d-block text-secondary text-truncate mt-n1">
-                                                    Change deprecated html tags to text decoration classes
-                                                    (#29604)
-                                                </div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <a href="#" class="list-group-item-actions">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon text-muted"
-                                                        width="24" height="24" viewBox="0 0 24 24"
-                                                        stroke-width="2" stroke="currentColor" fill="none"
-                                                        stroke-linecap="round" stroke-linejoin="round">
-                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                        <path
-                                                            d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
-                                                    </svg>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Adicione mais itens de notificação conforme necessário -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Formulário de Logout Oculto -->
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none;">
-                        @csrf
-                    </form>
-
-                    <!-- Menu de Usuário -->
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
-                            aria-label="Open user menu">
-                            <span class="avatar avatar-sm"
-                                style="background-image: url('{{ Auth::user()->profile_picture ? asset('storage/profile_pictures/' . Auth::user()->profile_picture) : asset('img/profile/profile.png') }}')"></span>
-                            <div class="d-none d-xl-block ps-2">
-                                <div>{{ Auth::user()->username }}</div>
-                                <div class="mt-1 small text-secondary">
-                                    @php
-                                        $userType = Auth::user()->user_type ?? '';
-                                        $className = Auth::user()->turma->class_name ?? '';
-                                    @endphp
-
-                                    @if ($userType === 'estudante' && $className)
-                                        {{ ucfirst($userType) }} - {{ $className }}
-                                    @elseif ($userType)
-                                        {{ ucfirst($userType) }}
-                                    @else
-                                        {{ '' }}
-                                    @endif
-                                </div>
-
-
-                            </div>
-                        </a>
-
-                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                            <a href="#" class="dropdown-item">Status</a>
-                            <a href="{{ route('profile.index') }}" class="dropdown-item">Profile</a>
-
-                            <a href="#" class="dropdown-item">Feedback</a>
-                            <div class="dropdown-divider"></div>
-                            <a href="./settings.html" class="dropdown-item">Settings</a>
-                            <a href="#" class="dropdown-item"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                Logout
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+                        </span>
+                        <span class="nav-link-title">Perfil</span>
+                    </a>
+                </li>
+                <!-- Jobs -->
+                <li class="nav-item">
+                    <a class="nav-link" href="./jobs">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M5 3v18h14v-18h-14z" />
+                                <path d="M5 6h14" />
+                                <path d="M5 9h14" />
+                            </svg>
+                        </span>
+                        <span class="nav-link-title">Vagas</span>
+                    </a>
+                </li>
+                <!-- Messages -->
+                <li class="nav-item">
+                    <a class="nav-link" href="./messages">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M21 12a2 2 0 1 1 -4 0a2 2 0 0 1 4 0" />
+                                <path d="M12 12a2 2 0 1 1 -4 0a2 2 0 0 1 4 0" />
+                            </svg>
+                        </span>
+                        <span class="nav-link-title">Mensagens</span>
+                    </a>
+                </li>
+                <!-- Notifications -->
+                <li class="nav-item">
+                    <a class="nav-link" href="./notifications">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M17 18h-10v-11c0 -2.2 1.8 -4 4 -4h4c2.2 0 4 1.8 4 4v11" />
+                                <path d="M12 15c1.6 0 3 1.4 3 3h-6c0 -1.6 1.4 -3 3 -3z" />
+                            </svg>
+                        </span>
+                        <span class="nav-link-title">Notificações</span>
+                    </a>
+                </li>
+                <!-- Settings -->
+                <li class="nav-item">
+                    <a class="nav-link" href="./settings">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M3 6h18" />
+                                <path d="M6 3v18" />
+                                <path d="M12 12l6 6" />
+                                <path d="M12 12l-6 6" />
+                            </svg>
+                        </span>
+                        <span class="nav-link-title">Configurações</span>
+                    </a>
+                </li>
+            </ul>
         </div>
-</header>
+    </div>
+</aside>
