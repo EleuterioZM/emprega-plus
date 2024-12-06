@@ -43,7 +43,10 @@
         <h1>Confirmação de Registro</h1>
         <p>Olá,</p>
         <p>Obrigado por se registrar na {{ config('app.name') }}.</p>
-        <p>Seu código de verificação é: <strong>{{ $code }}</strong></p>
+        <p>Seu código de verificação é:</p>
+<p style="display: inline-block; background-color: #eaf4fc; color: #007bff; padding: 10px 20px; border-radius: 5px; font-size: 1.2em; font-weight: bold; text-align: center;">
+    {{ $code }}
+</p>
         <p>Por favor, insira este código no campo apropriado para verificar sua conta.</p>
         <p>Se você não se registrou na nossa plataforma, por favor ignore este e-mail.</p>
         

@@ -54,8 +54,34 @@ class RegisterController extends Controller
                 $candidato->user_id = $user->id;
     
                 if ($request->hasFile('cv')) {
-                    $candidato->cv = $request->file('cv')->store('cv');
+                    // Caminho do diretório onde os CVs serão armazenados
+                    $cvDirectory = storage_path('app/public/cv');
+                    
+                    // Verificar se o diretório existe, caso contrário, criar
+                    if (!is_dir($cvDirectory)) {
+                        try {
+                            mkdir($cvDirectory, 0755, true); // Criar o diretório com permissões adequadas
+                            Log::info('Diretório criado com sucesso:', ['path' => $cvDirectory]);
+                        } catch (\Exception $e) {
+                            Log::error('Erro ao criar diretório:', ['error' => $e->getMessage()]);
+                            throw new \Exception('Erro ao criar o diretório para armazenamento de CV.');
+                        }
+                    }
+                    
+                    // Processar o upload do arquivo
+                    try {
+                        $cvFile = $request->file('cv');
+                        $fileName = uniqid('cv_') . '.' . $cvFile->getClientOriginalExtension(); // Nome único do arquivo
+                        $cvPath = $cvFile->storeAs('public/cv', $fileName); // Usar o método Laravel para armazenar no local correto
+                
+                        $candidato->cv = 'cv/' . $fileName; // Salvar o caminho relativo do arquivo na BD
+                        Log::info('CV armazenado com sucesso:', ['path' => $cvPath]);
+                    } catch (\Exception $e) {
+                        Log::error('Erro ao armazenar CV:', ['error' => $e->getMessage()]);
+                        throw new \Exception('Erro ao armazenar o CV. Verifique as permissões ou o caminho.');
+                    }
                 }
+                
                 $candidato->portfolio = $request->portfolio;
                 $candidato->save();
             } elseif ($user->user_type == 'empregador') {
