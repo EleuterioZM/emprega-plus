@@ -1,0 +1,2 @@
+# emprega-plus
+ Emprega+ - Sistema de Procura e Contratação de Empregos  Emprega+ é uma aplicação web desenvolvida em Laravel para conectar candidatos e empregadores no mercado de trabalho. O sistema permite que candidatos criem perfis, enviem candidaturas e pesquisem vagas de emprego, enquanto empregadores podem criar e gerenciar vagas, visualizar candidatos e estabelecer contato direto. A plataforma também inclui um sistema de mensagens entre candidatos e empregadores e notificações sobre o status das candidaturas.
