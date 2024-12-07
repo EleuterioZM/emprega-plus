@@ -49,7 +49,8 @@
                             <td>{{ $employer->telefone }}</td> <!-- Exibe o telefone da empresa -->
                             <td>{{ $employer->user->email }}</td> <!-- Exibe o e-mail do usuário associado ao empregador -->
                             <td>{{ $employer->company_name }}</td>
-                            <td>{{ $employer->email_verified_at ? 'Sim' : 'Não' }}</td>
+                            <td>{{ $employer->user->email_verified_at ? 'Sim' : 'Não' }}</td>
+
                             <td>
                                 @if ($employer->ativo === 1)
                                     <span class="badge bg-success text-white">Ativo</span>

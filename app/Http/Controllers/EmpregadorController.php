@@ -32,6 +32,7 @@ class EmpregadorController extends Controller
             'site' => 'nullable|url',
             'localizacao' => 'nullable|string|max:255',
             'endereco' => 'nullable|string|max:255',
+            'empresa_descricao' => 'nullable|string|max:1000',
             'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
     
@@ -46,6 +47,7 @@ class EmpregadorController extends Controller
             $empregador->telefone = $request->telefone;
             $empregador->site = $request->site;
             $empregador->localizacao = $request->localizacao;
+            $empregador->empresa_descricao = $request->empresa_descricao; // Atualizando a descrição da empresa
             $empregador->endereco = $request->endereco;
     
             // Verifica e processa a foto de perfil, se enviada
