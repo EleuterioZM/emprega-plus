@@ -45,12 +45,6 @@ Route::post('login', [LoginController::class, 'login']);
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 
-// Roteamento para a criação de perfis
-Route::get('/perfil/candidato', [PerfilController::class, 'createCandidato'])->name('perfil.create.candidato');
-Route::post('/perfil/candidato', [PerfilController::class, 'storeCandidato'])->name('perfil.store.candidato');
-Route::get('/perfil/empregador', [PerfilController::class, 'createEmpregador'])->name('perfil.create.empregador');
-Route::post('/perfil/empregador', [PerfilController::class, 'storeEmpregador'])->name('perfil.store.empregador');
-
 
  // Candidatos
  Route::get('candidatos/edit', [CandidatoController::class, 'edit'])->name('candidatos.edit');
@@ -62,3 +56,4 @@ Route::post('/perfil/empregador', [PerfilController::class, 'storeEmpregador'])-
  Route::get('/empregadores/create', [EmpregadorController::class, 'create'])->name('empregadores.create');
 
  Route::put('empregadores/update', [EmpregadorController::class, 'update'])->name('empregadores.update');
+ Route::patch('/empregadores/{empregadorId}/status', [EmpregadorController::class, 'alterarStatus'])->name('empregadores.alterarStatus');

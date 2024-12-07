@@ -51,28 +51,30 @@
                             <td>{{ $employer->company_name }}</td>
                             <td>{{ $employer->email_verified_at ? 'Sim' : 'Não' }}</td>
                             <td>
-                                @if ($employer->status === 'ativo')
+                                @if ($employer->ativo === 1)
                                     <span class="badge bg-success text-white">Ativo</span>
                                 @else
                                     <span class="badge bg-danger text-white">Inativo</span>
                                 @endif
                             </td>
                             <td>
-                                <!-- Botões para Editar e Desativar -->
+                                <!-- Botões para Editar e Alterar o Status -->
                                 <a href="{{ route('empregadores.edit', $employer->id) }}" class="text-primary" title="Editar">
                                     <i class="fas fa-edit fa-lg"></i>
                                 </a>
 
-                                @if ($employer->status === 'ativo')
-                                    <button type="button" class="btn btn-link text-warning" data-bs-toggle="modal"
-                                        data-bs-target="#modal-danger" data-id="{{ $employer->id }}">
-                                        <i class="fas fa-ban fa-lg"></i>
+                                <!-- Alteração de Status -->
+                                <form action="{{ route('empregadores.alterarStatus', $employer->id) }}" method="POST" style="display:inline-block;">
+                                    @csrf
+                                    @method('PATCH')
+                                    <button type="submit" class="btn btn-link text-warning" title="Alterar Status">
+                                        @if ($employer->ativo === 1)
+                                            <i class="fas fa-ban fa-lg"></i> 
+                                        @else
+                                            <i class="fas fa-check fa-lg"></i>
+                                        @endif
                                     </button>
-                                @else
-                                    <span class="text-secondary" title="Inativo">
-                                        <i class="fas fa-ban fa-lg"></i>
-                                    </span>
-                                @endif
+                                </form>
                             </td>
                         </tr>
                     @empty
@@ -88,8 +90,5 @@
         </div>
     </div>
 </div>
-
-<!-- Modal de Confirmação -->
-
 
 @endsection
