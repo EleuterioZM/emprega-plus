@@ -16,6 +16,10 @@ class Empregador extends Model
     protected $fillable = [
         'user_id',  // ID do usuário relacionado
         'empresa_nome',  // Nome da empresa
+        'empresa_descricao', // Descrição da empresa
+        'telefone',  // Telefone da empresa
+        'site',      // Site da empresa
+        'profile_image',
     ];
 
     // Relacionamento: um Empregador pertence a um User
