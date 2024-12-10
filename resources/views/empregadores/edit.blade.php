@@ -102,7 +102,7 @@
     <div class="container container-tight py-4">
       <div class="text-center mb-4">
         <a href="." class="navbar-brand navbar-brand-autodark">
-          <img src="{{ asset('static/logo.svg') }}" width="110" height="32" alt="Emprega+" class="navbar-brand-image">
+          <img src="{{ asset('') }}" width="110" height="32" alt="Emprega+" class="navbar-brand-image">
         </a>
       </div>
       <div class="card card-md">
@@ -113,18 +113,18 @@
             @method('PUT')
 
             <!-- Foto de Perfil -->
-            <div class="mb-3 text-center">
-              <label for="profile_image" class="form-label">Foto de Perfil</label><br>
-              <!-- Exibir foto de perfil se houver -->
-              <img
-                src="{{ $empregador->profile_image ? asset('storage/' . $empregador->profile_image) : asset('images/default-profile.png') }}"
-                id="profilePreview" class="profile-image" alt="Foto de Perfil">
-              <div>
-                <input type="file" class="form-control upload-btn" name="profile_image" id="profile_image"
-                  onchange="previewImage()">
-              </div>
+          <div class="mb-3 text-center">
+            <label for="profile_image" class="form-label">Foto de Perfil</label><br>
+            <!-- Exibir foto de perfil se houver -->
+            <img 
+              src="{{ $empregador->profile_image ? asset('storage/Empregadores_Profile/' . $empregador->profile_image) : asset('images/default-profile.png') }}" 
+              id="profilePreview" 
+              class="profile-image" 
+              alt="Foto de Perfil">
+            <div>
+              <input type="file" class="form-control upload-btn" name="profile_image" id="profile_image" onchange="previewImage()">
             </div>
-
+          </div>
             <!-- Nome da Empresa e Telefone lado a lado -->
             <div class="form-row mb-3">
               <div class="form-group">
