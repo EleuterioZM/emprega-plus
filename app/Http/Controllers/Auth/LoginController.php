@@ -1,8 +1,9 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Candidato;
+use App\Models\Empregador;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -27,25 +28,42 @@ class LoginController extends Controller
         // Determinar se a entrada é um email ou um username
         $field = filter_var($credentials['username'], FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
-        // Tentativa de login com as credenciais fornecidas
+        // Tentativa de autenticação
         if (Auth::attempt([$field => $credentials['username'], 'password' => $credentials['password']])) {
-            // Após autenticação, verificar se o e-mail foi verificado
             $user = Auth::user();
+
+            // Verificar status de 'ativo' para Empregador
+            $empregador = Empregador::where('user_id', $user->id)->first();
+            if ($empregador && $empregador->ativo === 0) {
+                Auth::logout();  // Faz logout imediatamente
+                return redirect()->route('login')->withErrors([
+                    'username' => 'Sua conta de Empregador está desativada. Entre em contato com o suporte.',
+                ]);
+            }
+
+            // Verificar status de 'ativo' para Candidato
+            $candidato = Candidato::where('user_id', $user->id)->first();
+            if ($candidato && $candidato->ativo === 0) {
+                Auth::logout();  // Faz logout imediatamente
+                return redirect()->route('login')->withErrors([
+                    'username' => 'Sua conta de Candidato está desativada. Entre em contato com o suporte.',
+                ]);
+            }
+
+            // Verificar se o e-mail foi confirmado
             if (is_null($user->email_verified_at)) {
-                // Deslogar o usuário se o e-mail não estiver verificado
                 Auth::logout();
-                // Redirecionar de volta com uma mensagem de erro
-                throw ValidationException::withMessages([
+                return redirect()->route('login')->withErrors([
                     'username' => 'O e-mail do usuário não foi verificado. Verifique seu e-mail.',
                 ]);
             }
 
-            // Se o e-mail estiver verificado, redireciona para o dashboard ou outra página desejada
+            // Redirecionar para o dashboard
             return redirect()->intended('/dashboard');
         }
 
-        // Se a autenticação falhar, redireciona de volta para o formulário de login com uma mensagem de erro
-        throw ValidationException::withMessages([
+        // Caso as credenciais estejam incorretas
+        return redirect()->route('login')->withErrors([
             'username' => 'As credenciais fornecidas estão incorretas.',
         ]);
     }
