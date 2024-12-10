@@ -50,7 +50,7 @@
         <span class="nav-link-title">Gestão</span>
     </a>
     <div class="dropdown-menu">
-        <a class="dropdown-item" href="{{ route('candidatos.edit') }}">
+        <a class="dropdown-item" href="{{ route('candidatos.index') }}">
             Gerir Candidatos
         </a>
         <a class="dropdown-item" href="{{ route('empregadores.index') }}">

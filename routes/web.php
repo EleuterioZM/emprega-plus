@@ -47,13 +47,17 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 
  // Candidatos
- Route::get('candidatos/edit', [CandidatoController::class, 'edit'])->name('candidatos.edit');
- Route::put('candidatos/update', [CandidatoController::class, 'update'])->name('candidatos.update');
 
+
+ Route::get('/candidatos', [CandidatoController::class, 'index'])->name('candidatos.index');
+ Route::get('/candidato/editar', [CandidatoController::class, 'edit'])->name('candidatos.edit');
+ Route::put('/candidato/atualizar', [CandidatoController::class, 'update'])->name('candidatos.update');
+ Route::patch('/candidato/{id}/alterar-status', [CandidatoController::class, 'alterarStatus'])->name('candidatos.alterar-status');
+ Route::get('/candidatos/download/{filename}', [CandidatoController::class, 'downloadCV'])->name('candidatos.download');
+ Route::patch('/candidatos/{id}/alterar-status', [CandidatoController::class, 'alterarStatus'])->name('candidatos.alterarStatus');
  // Empregadores
  Route::get('empregadores/edit', [EmpregadorController::class, 'edit'])->name('empregadores.edit');
  Route::get('/empregadores', [EmpregadorController::class, 'index'])->name('empregadores.index');
  Route::get('/empregadores/create', [EmpregadorController::class, 'create'])->name('empregadores.create');
-
  Route::put('empregadores/update', [EmpregadorController::class, 'update'])->name('empregadores.update');
  Route::patch('/empregadores/{empregadorId}/status', [EmpregadorController::class, 'alterarStatus'])->name('empregadores.alterarStatus');

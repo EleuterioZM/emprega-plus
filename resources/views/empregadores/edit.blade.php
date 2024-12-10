@@ -113,18 +113,18 @@
             @method('PUT')
 
             <!-- Foto de Perfil -->
-          <div class="mb-3 text-center">
-            <label for="profile_image" class="form-label">Foto de Perfil</label><br>
-            <!-- Exibir foto de perfil se houver -->
-            <img 
-              src="{{ $empregador->profile_image ? asset('storage/Empregadores_Profile/' . $empregador->profile_image) : asset('images/default-profile.png') }}" 
-              id="profilePreview" 
-              class="profile-image" 
-              alt="Foto de Perfil">
-            <div>
-              <input type="file" class="form-control upload-btn" name="profile_image" id="profile_image" onchange="previewImage()">
+            <div class="mb-3 text-center">
+              <label for="profile_image" class="form-label">Foto de Perfil</label><br>
+              <!-- Exibir foto de perfil se houver -->
+              <img
+                src="{{ isset($empregador) && $empregador->profile_image ? asset('storage/Empregadores_Profile/' . $empregador->profile_image) : asset('images/default-profile.png') }}"
+                id="profilePreview" class="profile-image" alt="Foto de Perfil">
+
+              <div>
+                <input type="file" class="form-control upload-btn" name="profile_image" id="profile_image"
+                  onchange="previewImage()">
+              </div>
             </div>
-          </div>
             <!-- Nome da Empresa e Telefone lado a lado -->
             <div class="form-row mb-3">
               <div class="form-group">

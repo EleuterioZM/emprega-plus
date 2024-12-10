@@ -11,9 +11,15 @@ class Candidato extends Model
 
     protected $fillable = [
         'user_id',
+        'foto',
+        'descricao',
+        'telefone',
+        'habilidades',
         'cv',
         'portfolio',
+        'ativo',      // Status (ativo ou desativado)
     ];
+    
 
     // Relacionamento com a tabela 'users'
     public function user()
