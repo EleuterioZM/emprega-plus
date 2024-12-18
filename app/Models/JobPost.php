@@ -27,4 +27,13 @@ class JobPost extends Model
     {
         return $this->belongsTo(Empregador::class);
     }
+    public function likes()
+{
+    return $this->hasMany(JobPostLike::class);
+}
+
+public function comentarios()
+{
+    return $this->hasMany(Comentario::class);
+}
 }

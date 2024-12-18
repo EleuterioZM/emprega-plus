@@ -3,8 +3,8 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CandidatoController;
-use App\Http\Controllers\ClasseController;
 use App\Http\Controllers\EmpregadorController;
+use App\Http\Controllers\FeedController;
 use App\Http\Controllers\JobPostController;
 use Illuminate\Support\Facades\Route;
 
@@ -71,3 +71,10 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
  Route::delete('/job-posts/{id}', [JobPostController::class, 'destroy'])->name('job_posts.destroy');
  Route::patch('/job-posts/{id}/status', [JobPostController::class, 'alterarStatus'])->name('job_posts.alterarStatus');
  Route::get('/job_posts/{job_post}', [JobPostController::class, 'show'])->name('job_posts.show');
+
+
+ Route::get('/feed', [FeedController::class, 'index'])->name('feed.index');
+ Route::post('/job_posts/{jobPost}/like', [FeedController::class, 'like'])->name('feed.like');
+ Route::post('/job_posts/{jobPost}/comentar', [FeedController::class, 'comentar'])->name('feed.comentar');
+ Route::post('/job_posts/{jobPost}/candidatar', [FeedController::class, 'candidatar'])->name('feed.candidatar');
+ 
