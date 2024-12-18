@@ -27,4 +27,8 @@ class Empregador extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function jobPosts()
+    {
+        return $this->hasMany(JobPost::class, 'empregador_id');
+    }
 }

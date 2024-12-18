@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CandidatoController;
 use App\Http\Controllers\ClasseController;
 use App\Http\Controllers\EmpregadorController;
+use App\Http\Controllers\JobPostController;
 use Illuminate\Support\Facades\Route;
 
 // Rotas de autenticação
@@ -61,3 +62,12 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
  Route::get('/empregadores/create', [EmpregadorController::class, 'create'])->name('empregadores.create');
  Route::put('empregadores/update', [EmpregadorController::class, 'update'])->name('empregadores.update');
  Route::patch('/empregadores/{empregadorId}/status', [EmpregadorController::class, 'alterarStatus'])->name('empregadores.alterarStatus');
+
+ Route::get('/job-posts', [JobPostController::class, 'index'])->name('job_posts.index');
+ Route::get('/job-posts/create', [JobPostController::class, 'create'])->name('job_posts.create');
+ Route::post('/job-posts', [JobPostController::class, 'store'])->name('job_posts.store');
+ Route::get('/job-posts/{id}/edit', [JobPostController::class, 'edit'])->name('job_posts.edit');
+ Route::put('/job-posts/{id}', [JobPostController::class, 'update'])->name('job_posts.update');
+ Route::delete('/job-posts/{id}', [JobPostController::class, 'destroy'])->name('job_posts.destroy');
+ Route::patch('/job-posts/{id}/status', [JobPostController::class, 'alterarStatus'])->name('job_posts.alterarStatus');
+ Route::get('/job_posts/{job_post}', [JobPostController::class, 'show'])->name('job_posts.show');

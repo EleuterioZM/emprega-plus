@@ -1,30 +1,30 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class JobPost extends Model
 {
     use HasFactory;
 
-    // Defina os campos que podem ser preenchidos diretamente
-    protected $fillable = ['title', 'description', 'status', 'empregador_id'];
+    protected $fillable = [
+        'empregador_id',
+        'titulo',
+        'descricao',
+        'localizacao',
+        'tipo',
+        'salario',
+        'documento_pdf',
+        'validade',
+        'ativo',
+    ];
 
-    /**
-     * Relacionamento inverso com o User (empregador).
-     */
-    public function employer()
-    {
-        return $this->belongsTo(User::class, 'empregador_id');
-    }
+    protected $dates = ['validade']; // Isso garante que a validade seja tratada como uma instância de Carbon
 
-    /**
-     * Relacionamento um para muitos com as candidaturas.
-     */
-    public function applications()
+    public function empregador()
     {
-        return $this->hasMany(Application::class, 'job_id');
+        return $this->belongsTo(Empregador::class);
     }
 }

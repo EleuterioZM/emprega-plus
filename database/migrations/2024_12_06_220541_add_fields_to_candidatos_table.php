@@ -20,8 +20,19 @@ class AddFieldsToCandidatosTable extends Migration
     public function down()
     {
         Schema::table('candidatos', function (Blueprint $table) {
-            // Removendo os campos em caso de rollback
-            $table->dropColumn(['foto', 'descricao', 'telefone', 'habilidades']);
+            // Removendo os campos apenas se existirem
+            if (Schema::hasColumn('candidatos', 'foto')) {
+                $table->dropColumn('foto');
+            }
+            if (Schema::hasColumn('candidatos', 'descricao')) {
+                $table->dropColumn('descricao');
+            }
+            if (Schema::hasColumn('candidatos', 'telefone')) {
+                $table->dropColumn('telefone');
+            }
+            if (Schema::hasColumn('candidatos', 'habilidades')) {
+                $table->dropColumn('habilidades');
+            }
         });
     }
 }
