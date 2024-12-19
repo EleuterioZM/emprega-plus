@@ -16,6 +16,8 @@
     <!-- Para o Data Picker-->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 </head>
 <body>
        <!-- Inclua o cabeçalho apenas se não estiver nas páginas de login ou cadastro -->
