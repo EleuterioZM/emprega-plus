@@ -36,8 +36,18 @@ class JobPostController extends Controller
             'tipo' => 'required',
             'salario' => 'required',
             'validade' => 'required|date',
+            'documento_pdf' => 'nullable|mimes:pdf|max:10240',
         ]);
-
+    
+        // Lidar com o upload do arquivo PDF, se houver
+        $pdfPath = null;
+        if ($request->hasFile('documento_pdf')) {
+            // Gerar o nome do arquivo
+            $documentName = $request->file('documento_pdf')->getClientOriginalName();  // Nome original do arquivo
+            $fileName = $validated['titulo'] . '_' . pathinfo($documentName, PATHINFO_FILENAME) . '.' . $request->file('documento_pdf')->getClientOriginalExtension();
+            $pdfPath = $request->file('documento_pdf')->storeAs('documents', $fileName, 'public');
+        }
+    
         // Criando a vaga com as informações validadas
         JobPost::create([
             'empregador_id' => auth()->user()->empregador->id,
@@ -48,11 +58,61 @@ class JobPostController extends Controller
             'salario' => $validated['salario'],
             'validade' => $validated['validade'],
             'ativo' => true,  // Vaga criada como ativa por padrão
+            'documento_pdf' => $pdfPath,
         ]);
-
+    
         return redirect()->route('job_posts.index');
     }
-
+    
+    public function update(Request $request, JobPost $jobPost)
+    {
+        // Garantindo que a vaga pertence ao empregador autenticado
+        if ($jobPost->empregador_id !== auth()->user()->empregador->id) {
+            return redirect()->route('job_posts.index')->with('error', 'Você não tem permissão para atualizar esta vaga.');
+        }
+    
+        // Validando os dados recebidos no formulário
+        $validated = $request->validate([
+            'titulo' => 'required',
+            'descricao' => 'required',
+            'localizacao' => 'required',
+            'tipo' => 'required',
+            'salario' => 'required',
+            'validade' => 'required|date',
+            'documento_pdf' => 'nullable|mimes:pdf|max:10240',
+        ]);
+    
+        // Lidar com o upload do arquivo PDF, se houver
+        if ($request->hasFile('documento_pdf')) {
+            // Excluir o PDF antigo, se houver
+            if ($jobPost->documento_pdf) {
+                \Storage::delete('public/' . $jobPost->documento_pdf);
+            }
+    
+            // Gerar o nome do arquivo
+            $documentName = $request->file('documento_pdf')->getClientOriginalName();  // Nome original do arquivo
+            $fileName = $validated['titulo'] . '_' . pathinfo($documentName, PATHINFO_FILENAME) . '.' . $request->file('documento_pdf')->getClientOriginalExtension();
+            // Armazenar o novo PDF com o nome formatado
+            $pdfPath = $request->file('documento_pdf')->storeAs('documents', $fileName, 'public');
+        } else {
+            // Manter o arquivo PDF atual se não houver upload
+            $pdfPath = $jobPost->documento_pdf;
+        }
+    
+        // Atualizando os dados da vaga
+        $jobPost->update([
+            'titulo' => $validated['titulo'],
+            'descricao' => $validated['descricao'],
+            'localizacao' => $validated['localizacao'],
+            'tipo' => $validated['tipo'],
+            'salario' => $validated['salario'],
+            'validade' => $validated['validade'],
+            'documento_pdf' => $pdfPath,
+        ]);
+    
+        return redirect()->route('job_posts.index')->with('info', 'Vaga atualizada com sucesso!');
+    }
+    
     // Método para o candidato se candidatar a uma vaga
     public function candidatar(Request $request, JobPost $jobPost)
     {
@@ -112,35 +172,7 @@ class JobPostController extends Controller
     }
 
     // Método para atualizar uma vaga
-    public function update(Request $request, JobPost $jobPost)
-    {
-        // Garantindo que a vaga pertence ao empregador autenticado
-        if ($jobPost->empregador_id !== auth()->user()->empregador->id) {
-            return redirect()->route('job_posts.index')->with('error', 'Você não tem permissão para atualizar esta vaga.');
-        }
-
-        // Validando os dados recebidos no formulário
-        $validated = $request->validate([
-            'titulo' => 'required',
-            'descricao' => 'required',
-            'localizacao' => 'required',
-            'tipo' => 'required',
-            'salario' => 'required',
-            'validade' => 'required|date',
-        ]);
-
-        // Atualizando os dados da vaga
-        $jobPost->update([
-            'titulo' => $validated['titulo'],
-            'descricao' => $validated['descricao'],
-            'localizacao' => $validated['localizacao'],
-            'tipo' => $validated['tipo'],
-            'salario' => $validated['salario'],
-            'validade' => $validated['validade'],
-        ]);
-
-        return redirect()->route('job_posts.index')->with('info', 'Vaga atualizada com sucesso!');
-    }
+    
     public function alterarStatus(JobPost $jobPost)
     {
         // Alterar o status da vaga (invertendo o valor de 'ativo')

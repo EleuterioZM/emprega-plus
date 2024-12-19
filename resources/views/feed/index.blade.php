@@ -128,6 +128,8 @@
                         <div class="modal-body">
                             <h6><strong>Título:</strong> {{ $jobPost->titulo }}</h6>
                             <p><strong>Descrição:</strong> {{ $jobPost->descricao }}</p>
+
+                
                             <ul class="list-unstyled">
                                 <li><strong>Localização:</strong> {{ $jobPost->localizacao }}</li>
                                 <li><strong>Salário:</strong>
@@ -136,6 +138,14 @@
                                 <li><strong>Validade:</strong>
                                     {{ \Carbon\Carbon::parse($jobPost->validade)->format('d/m/Y') }}</li>
                             </ul>
+                                           <!-- Verificar se o PDF existe -->
+                @if($jobPost->documento_pdf)
+                    <a href="{{ asset('storage/' . $jobPost->documento_pdf) }}" class="btn btn-primary" target="_blank">
+                    <i class="fas fa-file-pdf"></i>  Ver todos detalhes da Vaga
+                    </a>
+                @else
+                    <p>Nenhum PDF disponível para esta vaga.</p>
+                @endif
                             <hr>
                             <h6>Informações do Empregador</h6>
                             <div class="d-flex align-items-center">
