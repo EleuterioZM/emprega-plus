@@ -24,14 +24,23 @@
             </div>
 
             @if (session('success'))
-    <div class="alert alert-success">
+    <div class="alert alert-{{ session('alert_type', 'success') }} alert-dismissible fade show" role="alert">
         {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 @endif
 
 @if (session('error'))
-    <div class="alert alert-danger">
+    <div class="alert alert-{{ session('alert_type', 'danger') }} alert-dismissible fade show" role="alert">
         {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
+
+@if (session('update_success'))
+    <div class="alert alert-{{ session('alert_type', 'primary') }} alert-dismissible fade show" role="alert">
+        {{ session('update_success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 @endif
 
@@ -99,12 +108,15 @@
 </div>
 <script>
     // Espera 5 segundos para esconder o alerta
-    setTimeout(function() {
-        let alert = document.querySelector('.alert');
-        if (alert) {
-            alert.classList.remove('show');
-        }
-    }, 5000); // 5000 milissegundos = 5 segundos
+setTimeout(function() {
+    let alert = document.querySelector('.alert');
+    if (alert) {
+        // Adiciona a classe 'fade' para que o Bootstrap faça a animação de desvanecimento
+        alert.classList.add('fade');
+        alert.classList.remove('show');
+    }
+}, 5000); // 5000 milissegundos = 5 segundos
+
 </script>
 
 @endsection

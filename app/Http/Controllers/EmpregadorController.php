@@ -85,10 +85,17 @@ class EmpregadorController extends Controller
             $empregador->save();
             Log::info('Empregador atualizado com sucesso.');
     
-            return redirect()->route('empregadores.index')->with('success', 'Perfil da empresa atualizado com sucesso!');
+            return redirect()->route('empregadores.index')->with([
+                'update_success' => 'Perfil da empresa atualizado com sucesso!',
+                'alert_type' => 'primary' // Azul (alerta de sucesso)
+            ]);
+            
         } else {
-            Log::error('Empregador não encontrado para atualização.', ['user_id' => Auth::id()]);
-            return redirect()->route('empregadores.index')->with('error', 'Empregador não encontrado.');
+            return redirect()->route('empregadores.index')->with([
+                'error' => 'Erro ao atualizar o perfil.',
+                'alert_type' => 'danger' // Vermelho (alerta de erro)
+            ]);
+            
         }
     }
     
@@ -100,7 +107,10 @@ class EmpregadorController extends Controller
     
         $empregador->save();
     
-        return redirect()->route('empregadores.index')->with('success', 'Status do empregador alterado com sucesso!');
+        // Alterar para alert_type 'warning' para alerta laranja
+        return redirect()->route('empregadores.index')
+                         ->with('success', 'Status do empregador alterado com sucesso!')
+                         ->with('alert_type', 'warning');
     }
     
    
