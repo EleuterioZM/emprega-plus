@@ -23,23 +23,28 @@
                 </a>
             </div>
 
+            <!-- Exibição dos Alertas -->
             @if (session('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-@elseif (session('info'))
-    <div class="alert alert-info alert-dismissible fade show" role="alert">
-        {{ session('info') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-@elseif (session('warning'))
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        {{ session('warning') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-@endif
-
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @elseif (session('info'))
+                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                    {{ session('info') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @elseif (session('warning'))
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    {{ session('warning') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @elseif (session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
 
             <table class="table">
                 <thead>
@@ -77,11 +82,13 @@
                             </td>
                             <td>
                                 <!-- Botões para Editar e Alterar o Status -->
-                                <a href="{{ route('job_posts.edit', $jobPost->id) }}" class="text-primary me-2" title="Editar">
+                                <a href="{{ route('job_posts.edit', $jobPost->id) }}" class="text-primary me-2"
+                                    title="Editar">
                                     <i class="fas fa-edit fa-lg"></i>
                                 </a>
-                                
-                                <a href="{{ route('job_posts.show', $jobPost->id) }}" class="text-success me-2" title="Ver Detalhes">
+
+                                <a href="{{ route('job_posts.show', $jobPost->id) }}" class="text-success me-2"
+                                    title="Ver Detalhes">
                                     <i class="fas fa-eye fa-lg"></i>
                                 </a>
 
@@ -101,16 +108,16 @@
 
                                 <!-- Apagar -->
                                 <!--
-                                <form action="{{ route('job_posts.destroy', $jobPost->id) }}" method="POST"
-                                    style="display:inline-block;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-link text-danger" title="Apagar"
-                                        onclick="return confirm('Tem a certeza que deseja apagar esta vaga?')">
-                                        <i class="fas fa-trash fa-lg"></i>
-                                    </button>
-                                </form>
-                                -->
+                                    <form action="{{ route('job_posts.destroy', $jobPost->id) }}" method="POST"
+                                        style="display:inline-block;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-link text-danger" title="Apagar"
+                                            onclick="return confirm('Tem a certeza que deseja apagar esta vaga?')">
+                                            <i class="fas fa-trash fa-lg"></i>
+                                        </button>
+                                    </form>
+                                    -->
                             </td>
                         </tr>
                     @empty
