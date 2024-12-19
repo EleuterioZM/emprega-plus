@@ -52,8 +52,7 @@
                     </button>
                 </div>
             </div>
-
- <!-- Botão Curtir e Comentar -->
+<!-- Botão Curtir e Comentar -->
 <div class="card-footer d-flex justify-content-start gap-3">
     <!-- Botão Curtir -->
     <form action="{{ route('feed.like', $jobPost->id) }}" method="POST" class="d-inline-block like-button"
@@ -63,7 +62,7 @@
             class="btn p-0 border-0 {{ in_array($jobPost->id, $userLikes) ? 'text-primary' : 'text-muted' }} like-btn"
             id="like-btn-{{ $jobPost->id }}" style="background: none;">
             <span class="material-icons {{ in_array($jobPost->id, $userLikes) ? 'text-primary' : 'text-muted' }}"
-                style="font-size: 32px;">thumb_up</span>
+                style="font-size: 28px;">thumb_up</span>
             <span id="like-count-{{ $jobPost->id }}" class="ms-2">{{ $jobPost->likes->count() }}</span>
         </button>
     </form>
@@ -71,12 +70,10 @@
     <!-- Botão Comentar -->
     <button type="button" class="btn p-0 border-0 text-success" data-bs-toggle="collapse"
         data-bs-target="#commentSection{{ $jobPost->id }}" style="background: none;">
-        <span class="material-icons text-success" style="font-size: 32px;">comment</span>
+        <span class="material-icons text-success" style="font-size: 28px;">comment</span>
         <span id="comment-count-{{ $jobPost->id }}" class="ms-2">{{ $jobPost->comentarios->count() }}</span>
     </button>
 </div>
-
-
             <!-- Área de Comentários -->
             <div id="commentSection{{ $jobPost->id }}" class="collapse card-footer bg-light">
                 <h6 class="text-primary mb-3">Comentários</h6>
