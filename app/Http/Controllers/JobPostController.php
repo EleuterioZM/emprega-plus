@@ -10,10 +10,20 @@ use Illuminate\Http\Request;
 
 class JobPostController extends Controller
 {
+   
     public function index()
     {
-        $jobPosts = JobPost::with(['empregador', 'likes', 'comentarios'])->paginate(10);  // Ou outro número de itens por página
+        $jobPosts = JobPost::with(['empregador.user', 'likes', 'comentarios'])  // Carregando o relacionamento correto
+            ->latest()
+            ->paginate(10);  // Paginação, ajuste conforme necessário
+        
         return view('job_posts.index', compact('jobPosts'));
+    }
+    
+    // Método para exibir o formulário de criação de uma vaga
+    public function create()
+    {
+        return view('job_posts.create');
     }
 
     public function store(Request $request)

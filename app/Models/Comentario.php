@@ -24,4 +24,5 @@ class Comentario extends Model
     {
         return $this->belongsTo(Candidato::class);
     }
+    
 }

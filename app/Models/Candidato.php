@@ -26,4 +26,13 @@ class Candidato extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function candidaturas()
+{
+    return $this->hasMany(Candidatura::class, 'candidato_id');
+}
+public function likes()
+{
+    return $this->hasMany(JobPostLike::class, 'candidato_id');
+}
+
 }

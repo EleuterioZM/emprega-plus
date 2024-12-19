@@ -23,6 +23,8 @@ class EmpregadorController extends Controller
 
     public function update(Request $request)
     {
+        Log::info('Dados recebidos: ', $request->all());
+
         $request->validate([
             'company_name' => 'nullable|string|max:500',
             'telefone' => 'nullable|string|max:15',
@@ -45,6 +47,7 @@ class EmpregadorController extends Controller
             $empregador->empresa_descricao = $request->empresa_descricao;
             $empregador->endereco = $request->endereco;
     
+            
             // Processar a foto de perfil, se enviada
             if ($request->hasFile('profile_image')) {
                 Log::info('Arquivo de foto recebido. Processando...');

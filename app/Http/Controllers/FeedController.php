@@ -10,22 +10,28 @@ use Illuminate\Http\Request;
 
 class FeedController extends Controller
 {
-    // Método para exibir o feed de vagas
     public function index()
     {
-        // Carregar as postagens de vagas, com likes e comentários
-        $jobPosts = JobPost::with(['empregador', 'likes', 'comentarios'])
-            ->latest() // Ordena as postagens mais recentes
-            ->paginate(10); // Paginação para o feed
-
-        // Obter as candidaturas e likes do usuário atual
-        $userCandidaturas = auth()->user()->candidato ? auth()->user()->candidato->candidaturas->pluck('job_post_id')->toArray() : [];
         
-        $userLikes = auth()->user()->candidato ? auth()->user()->candidato->likes->pluck('job_post_id')->toArray() : [];
+            $jobPosts = JobPost::with(['empregador.user', 'likes', 'comentarios'])
+    ->latest()
+    ->paginate(10);
 
-        // Retornar a view com os dados
-        return view('feed.index', compact('jobPosts', 'userCandidaturas', 'userLikes'));
+    
+        $userCandidato = auth()->user()->candidato; 
+    
+        $userCandidaturas = $userCandidato ? $userCandidato->candidaturas->pluck('job_post_id')->toArray() : [];
+        $userLikes = $userCandidato ? $userCandidato->likes->pluck('job_post_id')->toArray() : [];
+        
+        // Caminho completo da foto do candidato
+        $userFoto = $userCandidato && $userCandidato->foto 
+            ? asset('storage/Candidatos_Fotos/' . $userCandidato->foto)
+            : asset('img/user-placeholder.png');
+    
+        return view('feed.index', compact('jobPosts', 'userCandidaturas', 'userLikes', 'userFoto'));
     }
+    
+
 
     // Método para curtir uma postagem
     public function like(JobPost $jobPost)

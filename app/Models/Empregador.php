@@ -13,14 +13,16 @@ class Empregador extends Model
     protected $table = 'empregadores'; // Nome da tabela no banco de dados
 
     // Campos que podem ser atribuídos em massa
+   
     protected $fillable = [
-        'user_id',  // ID do usuário relacionado
-        'empresa_nome',  // Nome da empresa
-        'empresa_descricao', // Descrição da empresa
-        'telefone',  // Telefone da empresa
-        'site',      // Site da empresa
+        'user_id',
+        'company_name',
+        'empresa_descricao',
+        'telefone',
+        'site',
         'profile_image',
     ];
+    
 
     // Relacionamento: um Empregador pertence a um User
     public function user()
