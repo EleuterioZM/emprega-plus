@@ -34,5 +34,9 @@ public function likes()
 {
     return $this->hasMany(JobPostLike::class, 'candidato_id');
 }
+public function comentarios()
+{
+    return $this->hasMany(Comentario::class, 'candidato_id');
+}
 
 }

@@ -12,21 +12,31 @@ class FeedController extends Controller
 {
     public function index()
     {
-        
-            $jobPosts = JobPost::with(['empregador.user', 'likes', 'comentarios'])
-    ->latest()
-    ->paginate(10);
-
+        // Carregar as postagens de emprego com suas relações necessárias (empregador, likes e comentários com candidatos e usuários)
+        $jobPosts = JobPost::with(['empregador.user', 'likes', 'comentarios.candidato.user'])
+            ->latest()
+            ->paginate(10);
     
+        // Verificar as candidaturas e likes do usuário
         $userCandidato = auth()->user()->candidato; 
     
+        // Lista de candidaturas do usuário
         $userCandidaturas = $userCandidato ? $userCandidato->candidaturas->pluck('job_post_id')->toArray() : [];
+    
+        // Lista de likes do usuário
         $userLikes = $userCandidato ? $userCandidato->likes->pluck('job_post_id')->toArray() : [];
         
         // Caminho completo da foto do candidato
         $userFoto = $userCandidato && $userCandidato->foto 
             ? asset('storage/Candidatos_Fotos/' . $userCandidato->foto)
             : asset('img/user-placeholder.png');
+        
+        // Verificar foto do empregador para cada postagem
+        $jobPosts->each(function ($jobPost) {
+            $jobPost->empregadorFoto = $jobPost->empregador && $jobPost->empregador->foto
+                ? asset('storage/Empregadores_Fotos/' . $jobPost->empregador->foto)
+                : asset('img/empregador-placeholder.png');
+        });
     
         return view('feed.index', compact('jobPosts', 'userCandidaturas', 'userLikes', 'userFoto'));
     }
