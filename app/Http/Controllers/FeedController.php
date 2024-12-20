@@ -14,6 +14,7 @@ class FeedController extends Controller
     {
         // Carregar as postagens de emprego com suas relações necessárias (empregador, likes e comentários com candidatos e usuários)
         $jobPosts = JobPost::with(['empregador.user', 'likes', 'comentarios.candidato.user'])
+            ->where('ativo', true)  // Filtra apenas as vagas ativas
             ->latest()
             ->paginate(10);
     
@@ -40,7 +41,7 @@ class FeedController extends Controller
     
         return view('feed.index', compact('jobPosts', 'userCandidaturas', 'userLikes', 'userFoto'));
     }
-    
+     
 
 
     // Método para curtir uma postagem
