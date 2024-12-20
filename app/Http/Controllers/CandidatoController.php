@@ -113,7 +113,7 @@ class CandidatoController extends Controller
             Log::info('Candidato atualizado com sucesso.');
     
           //  return redirect()->route('candidatos.edit')->with('success', 'Perfil atualizado com sucesso!');
-            return redirect()->route('candidatos.index')->with('success', 'Candidato atualizado com sucesso!');
+            return redirect()->route('candidatos.index')->with('update_success', 'Candidato atualizado com sucesso!');
 
         } else {
             Log::error('Candidato não encontrado para atualização.', ['user_id' => Auth::id()]);
