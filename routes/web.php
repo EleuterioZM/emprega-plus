@@ -84,3 +84,6 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
  Route::post('/job_posts/{jobPost}/comentar', [FeedController::class, 'comentar'])->name('feed.comentar');
  Route::post('/job_posts/{jobPost}/candidatar', [FeedController::class, 'candidatar'])->name('feed.candidatar');
  
+
+Route::put('/feed/comentario/{comentario}', [FeedController::class, 'updateComment'])->name('feed.update_comment');
+Route::delete('/feed/comentario/{comentario}', [FeedController::class, 'deleteComment'])->name('feed.delete_comment');

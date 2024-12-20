@@ -16,7 +16,9 @@
     <!-- Para o Data Picker-->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<!-- Adicionar o CSS do EmojiButton -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/emoji-button@4.7.0/dist/index.min.css">
 
 </head>
 <body>
@@ -46,6 +48,9 @@
     <script src="{{ asset('js/danger_modal.js') }}"></script>
     <script src="{{ asset('js/outras-scripts.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Adicionar o JS do EmojiButton -->
+<script src="https://cdn.jsdelivr.net/npm/emoji-button@4.7.0/dist/index.min.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

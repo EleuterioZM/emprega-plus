@@ -18,8 +18,13 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
                         <h5 class="card-title mb-0">{{ $jobPost->titulo }}</h5>
+                        <p><strong>Vaga publicada pelo(a):</strong>
+                            <i>{{ $jobPost->empregador->user->username ?? 'N/A' }}</i>
+                        </p>
+                        <hr>
                         <small class="text-muted">
                             Publicado em {{ $jobPost->created_at->format('d/m/Y H:i') }}
+
                         </small>
                     </div>
                     <div>
@@ -52,28 +57,31 @@
                     </button>
                 </div>
             </div>
-<!-- Botão Curtir e Comentar -->
-<div class="card-footer d-flex justify-content-start gap-3">
-    <!-- Botão Curtir -->
-    <form action="{{ route('feed.like', $jobPost->id) }}" method="POST" class="d-inline-block like-button"
-        data-post-id="{{ $jobPost->id }}">
-        @csrf
-        <button type="submit"
-            class="btn p-0 border-0 {{ in_array($jobPost->id, $userLikes) ? 'text-primary' : 'text-muted' }} like-btn"
-            id="like-btn-{{ $jobPost->id }}" style="background: none;">
-            <span class="material-icons {{ in_array($jobPost->id, $userLikes) ? 'text-primary' : 'text-muted' }}"
-                style="font-size: 28px;">thumb_up</span>
-            <span id="like-count-{{ $jobPost->id }}" class="ms-2">{{ $jobPost->likes->count() }}</span>
-        </button>
-    </form>
 
-    <!-- Botão Comentar -->
-    <button type="button" class="btn p-0 border-0 text-success" data-bs-toggle="collapse"
-        data-bs-target="#commentSection{{ $jobPost->id }}" style="background: none;">
-        <span class="material-icons text-success" style="font-size: 28px;">comment</span>
-        <span id="comment-count-{{ $jobPost->id }}" class="ms-2">{{ $jobPost->comentarios->count() }}</span>
-    </button>
-</div>
+            <!-- Botão Curtir e Comentar -->
+            <div class="card-footer d-flex justify-content-start gap-3">
+                <!-- Botão Curtir -->
+                <form action="{{ route('feed.like', $jobPost->id) }}" method="POST" class="d-inline-block like-button"
+                    data-post-id="{{ $jobPost->id }}">
+                    @csrf
+                    <button type="submit"
+                        class="btn p-0 border-0 {{ in_array($jobPost->id, $userLikes) ? 'text-primary' : 'text-muted' }} like-btn"
+                        id="like-btn-{{ $jobPost->id }}" style="background: none;">
+                        <span
+                            class="material-icons {{ in_array($jobPost->id, $userLikes) ? 'text-primary' : 'text-muted' }}"
+                            style="font-size: 28px;">thumb_up</span>
+                        <span id="like-count-{{ $jobPost->id }}" class="ms-2">{{ $jobPost->likes->count() }}</span>
+                    </button>
+                </form>
+
+                <!-- Botão Comentar -->
+                <button type="button" class="btn p-0 border-0 text-success" data-bs-toggle="collapse"
+                    data-bs-target="#commentSection{{ $jobPost->id }}" style="background: none;">
+                    <span class="material-icons text-success" style="font-size: 28px;">comment</span>
+                    <span id="comment-count-{{ $jobPost->id }}" class="ms-2">{{ $jobPost->comentarios->count() }}</span>
+                </button>
+            </div>
+
             <!-- Área de Comentários -->
             <div id="commentSection{{ $jobPost->id }}" class="collapse card-footer bg-light">
                 <h6 class="text-primary mb-3">Comentários</h6>
@@ -81,23 +89,70 @@
                 <!-- Comentários Existentes -->
                 <div class="mb-3">
                     @forelse ($jobPost->comentarios as $comentario)
-                        <div class="d-flex mb-3">
+                        <div class="d-flex mb-3 comment" style="position: relative;">
                             <div class="me-2">
                                 <img src="{{ $comentario->candidato->foto ? asset('storage/Candidatos_Fotos/' . $comentario->candidato->foto) : asset('img/user-placeholder.png') }}"
                                     alt="Avatar de {{ $comentario->candidato->user->name }}" class="rounded-circle"
                                     style="width: 45px; height: 45px; object-fit: cover;">
                             </div>
-                            <div>
-                                <p><strong>{{ $comentario->candidato->user->username ?? 'Usuário Desconhecido' }}</strong>
-                                </p>
+                            <div class="flex-grow-1">
+                                <p><strong>{{ $comentario->candidato->user->username ?? 'Usuário Desconhecido' }}</strong></p>
                                 <p class="mb-1">{{ $comentario->comentario }}</p>
                                 <small class="text-muted">{{ $comentario->created_at->diffForHumans() }}</small>
+
+                                <!-- Botões Editar e Excluir (aparecem apenas para o autor ao pressionar o comentário) -->
+                                @if ($comentario->candidato_id == auth()->user()->candidato->id)
+                                    <div class="comment-icons" style="display: none; gap: 1rem; margin-top: 0.5rem;">
+                                        <!-- Botão Editar -->
+                                        <button class="btn btn-sm" style="border: none; background: transparent;"
+                                            data-bs-toggle="collapse" data-bs-target="#editCommentForm{{ $comentario->id }}">
+                                            <i class="fas fa-edit" style="font-size: 1.2rem;"></i>
+                                        </button>
+                                        <!-- Botão Excluir -->
+                                        <form action="{{ route('feed.delete_comment', $comentario->id) }}" method="POST"
+                                            class="d-inline-block">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm" style="border: none; background: transparent;">
+                                                <i class="fas fa-trash text-danger" style="font-size: 1.2rem;"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                @endif
+
+                                <!-- Formulário de Edição -->
+                                @if ($comentario->candidato_id == auth()->user()->candidato->id)
+                                    <div id="editCommentForm{{ $comentario->id }}" class="collapse mt-2">
+                                        <form action="{{ route('feed.update_comment', $comentario->id) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <textarea name="comentario" class="form-control" rows="2"
+                                                required>{{ $comentario->comentario }}</textarea>
+                                            <button type="submit" class="btn btn-info mt-2">Atualizar Comentário</button>
+                                        </form>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     @empty
                         <p class="text-muted">Nenhum comentário ainda. Seja o primeiro!</p>
                     @endforelse
                 </div>
+
+                <!-- JavaScript para Mostrar/Ocultar Ícones -->
+                <script>
+                    document.querySelectorAll('.comment').forEach(comment => {
+                        comment.addEventListener('click', () => {
+                            const editForm = comment.querySelector('.collapse.show'); // Verifica se o formulário de edição está aberto
+                            if (!editForm) { // Se não estiver em edição
+                                const icons = comment.querySelector('.comment-icons');
+                                if (icons) {
+                                    icons.style.display = icons.style.display === 'none' ? 'flex' : 'none';
+                                }
+                            }
+                        });
+                    });
+                </script>
 
                 <!-- Formulário de Comentário -->
                 <form action="{{ route('feed.comentar', $jobPost->id) }}" method="POST">
@@ -126,18 +181,23 @@
                             <h6><strong>Título:</strong> {{ $jobPost->titulo }}</h6>
                             <p><strong>Descrição:</strong> {{ $jobPost->descricao }}</p>
                             <ul class="list-unstyled">
-                                <li><strong>Localização:</strong> {{ $jobPost->localizacao }}</li>
-                                <li><strong>Salário:</strong>
-                                    {{ $jobPost->salario ? 'MZN ' . number_format($jobPost->salario, 2, ',', '.') : 'N/A' }}
-                                </li>
-                                <li><strong>Validade:</strong>
-                                    {{ \Carbon\Carbon::parse($jobPost->validade)->format('d/m/Y') }}</li>
+                                <div class="d-flex gap-3">
+                                    <li><strong>Localização:</strong> {{ $jobPost->localizacao }}</li>
+                                    <li><strong>Salário:</strong>
+                                        {{ $jobPost->salario ? 'MZN ' . number_format($jobPost->salario, 2, ',', '.') : 'N/A' }}
+                                    </li>
+                                    <li><strong>Validade:</strong>
+                                        {{ \Carbon\Carbon::parse($jobPost->validade)->format('d/m/Y') }}
+                                    </li>
+                                </div>
+
                             </ul>
                             @if($jobPost->documento_pdf)
                                 <a href="{{ asset('storage/' . $jobPost->documento_pdf) }}" class="btn btn-primary"
                                     target="_blank">
-                                    <i class="fas fa-file-pdf"></i> Ver PDF Completo
+                                    <i class="fas fa-file-pdf ms-2"></i> Ver PDF Completo
                                 </a>
+
                             @else
                                 <p>Nenhum PDF disponível para esta vaga.</p>
                             @endif
@@ -148,47 +208,59 @@
                                     alt="Foto do Empregador" class="rounded-circle" width="100" height="100"
                                     style="object-fit: cover;">
                                 <div class="ms-3">
-                                    <p><strong>Nome:</strong> {{ $jobPost->empregador->user->username ?? 'N/A' }}</p>
-                                    <p><strong>Email:</strong> {{ $jobPost->empregador->user->email }}</p>
-                                    <p><strong>Empresa:</strong> {{ $jobPost->empregador->company_name }}</p>
+                                    <div class="d-flex justify-content-between">
+                                        <p><strong>Email:</strong> {{ $jobPost->empregador->user->email }}</p>
+                                    </div>
+
+                                    <div class="d-flex justify-content-between">
+                                        <p class="me-3"><strong>Nome:</strong>
+                                            {{ $jobPost->empregador->user->username ?? 'N/A' }}</p>
+                                        <p class="me-3"><strong>Empresa:</strong> {{ $jobPost->empregador->company_name }}
+                                        </p>
+                                        <p><strong>Telefone:</strong> {{ $jobPost->empregador->telefone }}</p>
+                                    </div>
+
+
                                 </div>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
     @endforeach
 
-    <!-- Paginação -->
-    <div class="d-flex justify-content-center">
-        {{ $jobPosts->links() }}
+        <!-- Paginação -->
+        <div class="d-flex justify-content-center">
+            {{ $jobPosts->links() }}
+        </div>
     </div>
-</div>
-@endsection
+    @endsection
 
-@push('scripts')
-<script>
-    document.querySelectorAll('.like-button').forEach(button => {
-        button.addEventListener('submit', function(event) {
-            event.preventDefault();
-            const postId = this.dataset.postId;
-            const likeBtn = document.getElementById(`like-btn-${postId}`);
-            const likeCount = document.getElementById(`like-count-${postId}`);
+    @push('scripts')
+        <script>
+            document.querySelectorAll('.like-button').forEach(button => {
+                button.addEventListener('submit', function (event) {
+                    event.preventDefault();
+                    const postId = this.dataset.postId;
+                    const likeBtn = document.getElementById(`like-btn-${postId}`);
+                    const likeCount = document.getElementById(`like-count-${postId}`);
 
-            if (likeBtn.classList.contains('btn-outline-primary')) {
-                likeBtn.classList.remove('btn-outline-primary');
-                likeBtn.classList.add('btn-primary');
-                likeCount.textContent = parseInt(likeCount.textContent) + 1;
-            } else {
-                likeBtn.classList.remove('btn-primary');
-                likeBtn.classList.add('btn-outline-primary');
-                likeCount.textContent = parseInt(likeCount.textContent) - 1;
-            }
-        });
-    });
-</script>
-@endpush
+                    if (likeBtn.classList.contains('btn-outline-primary')) {
+                        likeBtn.classList.remove('btn-outline-primary');
+                        likeBtn.classList.add('btn-primary');
+                        likeCount.textContent = parseInt(likeCount.textContent) + 1;
+                    } else {
+                        likeBtn.classList.remove('btn-primary');
+                        likeBtn.classList.add('btn-outline-primary');
+                        likeCount.textContent = parseInt(likeCount.textContent) - 1;
+                    }
+                });
+            });
+
+
+
+        </script>
+    @endpush

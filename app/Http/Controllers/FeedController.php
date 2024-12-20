@@ -94,4 +94,38 @@ class FeedController extends Controller
 
         return back();
     }
+     // Método para editar um comentário
+     public function updateComment(Request $request, Comentario $comentario)
+     {
+         // Validação do comentário
+         $request->validate([
+             'comentario' => 'required|string|max:500',
+         ]);
+ 
+         // Verifica se o comentário pertence ao usuário autenticado
+         if ($comentario->candidato_id != auth()->user()->candidato->id) {
+             return redirect()->back()->withErrors('Você não tem permissão para editar este comentário.');
+         }
+ 
+         // Atualiza o comentário
+         $comentario->update([
+             'comentario' => $request->comentario,
+         ]);
+ 
+         return back();
+     }
+ 
+     // Método para excluir um comentário
+     public function deleteComment(Comentario $comentario)
+     {
+         // Verifica se o comentário pertence ao usuário autenticado
+         if ($comentario->candidato_id != auth()->user()->candidato->id) {
+             return redirect()->back()->withErrors('Você não tem permissão para excluir este comentário.');
+         }
+ 
+         // Exclui o comentário
+         $comentario->delete();
+ 
+         return back();
+     }
 }
