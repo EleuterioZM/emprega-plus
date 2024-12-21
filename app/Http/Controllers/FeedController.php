@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\CandidaturaEnviada;
 use App\Models\JobPost;
 use App\Models\Candidatura;
 use App\Models\JobPostLike;
 use App\Models\Comentario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class FeedController extends Controller
 {
@@ -81,20 +83,42 @@ class FeedController extends Controller
         return back();
     }
 
-    // Método para se candidatar a uma vaga
-    public function candidatar(JobPost $jobPost)
+   
+    public function candidatar(Request $request, $jobPostId)
     {
-        // Verifica se o usuário já se candidatou
-        if (!in_array($jobPost->id, auth()->user()->candidato->candidaturas->pluck('job_post_id')->toArray())) {
-            // Cria a candidatura para a vaga
-            Candidatura::create([
-                'candidato_id' => auth()->user()->candidato->id,
-                'job_post_id' => $jobPost->id,
-            ]);
+        $request->validate([
+            'carta_candidatura' => 'nullable|file|mimes:pdf,doc,docx|max:2048',  // Adicionando validação para a carta de candidatura
+            'anexo' => 'nullable|file|mimes:pdf,doc,docx|max:2048',  // Validação do arquivo de anexo
+        ]);
+    
+        $jobPost = JobPost::findOrFail($jobPostId);
+        $candidato = auth()->user()->candidato;
+    
+        // Criar a candidatura no banco de dados
+        $candidatura = Candidatura::create([
+            'candidato_id' => $candidato->id,
+            'job_post_id' => $jobPost->id,
+        ]);
+    
+        // Verificar se há carta de candidatura e fazer upload
+        if ($request->hasFile('carta_candidatura')) {
+            $candidatura->carta_candidatura = $request->file('carta_candidatura')->store('candidaturas', 'public');
         }
-
-        return back();
+    
+        // Verificar se há anexo e fazer upload
+        if ($request->hasFile('anexo')) {
+            $candidatura->anexo = $request->file('anexo')->store('anexos', 'public');
+        }
+    
+        // Salvar a candidatura com os arquivos enviados
+        $candidatura->save();
+    
+        // Enviar e-mail para o empregador com a candidatura
+        Mail::to($jobPost->empregador->user->email)->send(new CandidaturaEnviada($candidatura, $jobPost));
+    
+        return back()->with('success', 'Candidatura enviada com sucesso!');
     }
+    
      // Método para editar um comentário
      public function updateComment(Request $request, Comentario $comentario)
      {

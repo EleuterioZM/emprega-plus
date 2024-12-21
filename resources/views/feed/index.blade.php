@@ -40,23 +40,59 @@
                     <li><strong>Validade:</strong> {{ \Carbon\Carbon::parse($jobPost->validade)->format('d/m/Y') }}</li>
                 </ul>
 
-                <!-- Botões de Ação -->
-                <div class="d-flex justify-content-between align-items-center mt-3">
-                    @if (!in_array($jobPost->id, $userCandidaturas))
-                        <form action="{{ route('feed.candidatar', $jobPost->id) }}" method="POST" class="me-2">
-                            @csrf
-                            <button type="submit" class="btn btn-primary">Candidatar-se</button>
-                        </form>
-                    @else
-                        <button class="btn btn-secondary me-2" disabled>Candidatura Enviada</button>
-                    @endif
+               <!-- Botões de Ação -->
+<div class="d-flex justify-content-between align-items-center mt-3">
+    @if (!in_array($jobPost->id, $userCandidaturas))
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+            data-bs-target="#candidatarModal{{ $jobPost->id }}">
+            Candidatar-se
+        </button>
+    @else
+        <button class="btn btn-secondary me-2" disabled>Candidatura Enviada</button>
+    @endif
 
-                    <button type="button" class="btn btn-outline-info" data-bs-toggle="modal"
-                        data-bs-target="#jobDetailsModal{{ $jobPost->id }}">
-                        <i class="fas fa-info-circle"></i> Mais Detalhes
-                    </button>
-                </div>
+    <button type="button" class="btn btn-outline-info" data-bs-toggle="modal"
+        data-bs-target="#jobDetailsModal{{ $jobPost->id }}">
+        <i class="fas fa-info-circle"></i> Mais Detalhes
+    </button>
+</div>
+
+<!-- Modal de Candidatura -->
+<div class="modal fade" id="candidatarModal{{ $jobPost->id }}" tabindex="-1"
+    aria-labelledby="candidatarModalLabel{{ $jobPost->id }}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="candidatarModalLabel{{ $jobPost->id }}">Candidatar-se à Vaga</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <form action="{{ route('feed.candidatar', $jobPost->id) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body">
+                    <h6><strong>{{ $jobPost->titulo }}</strong></h6>
+                    <p><strong>Vaga publicada por:</strong> {{ $jobPost->empregador->user->username ?? 'N/A' }}</p>
+
+                    <div class="mb-3">
+    <label for="carta_candidatura" class="form-label">Carta de Candidatura</label>
+    <input type="file" name="carta_candidatura" class="form-control" accept=".pdf,.doc,.docx,.txt" placeholder="Selecione um arquivo de carta de candidatura (opcional)">
+    <small class="form-text text-muted">Formato permitido: PDF, DOC, DOCX, TXT.</small>
+</div>
+
+
+                    <div class="mb-3">
+                        <label for="anexo" class="form-label">Anexar Arquivo (opcional)</label>
+                        <input type="file" class="form-control" name="anexo">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-primary">Enviar Candidatura</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
             <!-- Botão Curtir e Comentar -->
             <div class="card-footer d-flex justify-content-start gap-3">

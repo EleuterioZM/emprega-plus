@@ -12,6 +12,8 @@ class Candidatura extends Model
     protected $fillable = [
         'candidato_id',
         'job_post_id',
+        'carta_candidatura',
+        'anexo',
     ];
 
     public function jobPost()
