@@ -62,7 +62,7 @@
                 <tbody>
                     @forelse ($jobPosts as $jobPost)
                         <tr>
-                            <td>{{ $jobPost->id }}</td>
+                        <td>{{ $loop->iteration }}</td>
                             <td>{{ $jobPost->titulo }}</td>
                             <td>{{ $jobPost->localizacao }}</td>
                             <td>{{ ucfirst($jobPost->tipo) }}</td>
