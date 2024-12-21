@@ -78,3 +78,5 @@ Route::put('/feed/comentario/{comentario}', [FeedController::class, 'updateComme
 Route::delete('/feed/comentario/{comentario}', [FeedController::class, 'deleteComment'])->name('feed.delete_comment');
 // Rota para exibir o perfil
 Route::get('/perfil', [ProfileController::class, 'index'])->name('perfil.index');
+Route::delete('/perfil', [ProfileController::class, 'delete'])->name('profile.delete');
+

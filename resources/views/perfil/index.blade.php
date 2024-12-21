@@ -253,13 +253,50 @@
                                             <span class="badge bg-danger text-white">Inativo</span>
                                         @endif
                                     </div>
+                                    <!-- Modal de Confirmação -->
+                                    <div class="modal" id="deleteModal" tabindex="-1" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Confirmar Exclusão</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Você tem certeza que deseja excluir seu perfil? Esta ação não
+                                                        pode ser desfeita.</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Cancelar</button>
+                                                    <form id="deleteProfileForm" method="POST" action="">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger">Excluir</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="form-row mb-3 d-flex justify-content-between">
+                                        <!-- Botão Voltar -->
+                                        <a href="{{ route('dashboard') }}" class="btn btn-warning btn-back mt-3">
+                                            <i class="fas fa-arrow-left"></i> Voltar
+                                        </a>
+
+                                        <!-- Botões Apagar e Editar Perfil -->
+                                        <div class="d-flex gap-2">
+                                            <!-- Botão Apagar Perfil -->
+                                            <button type="button" class="btn btn-danger mt-3" data-bs-toggle="modal"
+                                                data-bs-target="#deleteModal"
+                                                onclick="setDeleteAction('{{ route('profile.delete') }}')">
+                                                <i class="fa fa-trash"></i> Apagar Perfil
+                                            </button>
+                                        </div>
+                                    </div>
 
 
-
-                                    <!-- Botão Voltar -->
-                                    <a href="{{ route('dashboard') }}" class="btn btn-warning btn-back mt-3">
-                                        <i class="fas fa-arrow-left"></i> Voltar
-                                    </a>
                     </form>
                 </div>
             </div>
@@ -268,7 +305,11 @@
 
     <script src="{{ asset('dist/js/tabler.min.js') }}" defer></script>
     <script src="{{ asset('dist/js/demo.min.js') }}" defer></script>
-
+    <script>
+        function setDeleteAction(url) {
+            document.getElementById('deleteProfileForm').action = url;
+        }
+    </script>
 </body>
 
 </html>
