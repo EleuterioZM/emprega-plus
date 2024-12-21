@@ -48,21 +48,21 @@
                         <span class="nav-link-title">Home</span>
                     </a>
                 </li>
-                <!-- Perfil -->
                 <li class="nav-item">
-                    <a class="nav-link" href="./profile">
-                        <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M12 12c2.8 0 5 2.2 5 5s-2.2 5 -5 5s-5 -2.2 -5 -5s2.2 -5 5 -5z" />
-                                <path d="M12 2c-2.8 0 -5 2.2 -5 5s2.2 5 5 5s5 -2.2 5 -5s-2.2 -5 -5 -5z" />
-                            </svg>
-                        </span>
-                        <span class="nav-link-title">Perfil</span>
-                    </a>
-                </li>
+    <a class="nav-link" href="{{ route('perfil.index') }}">
+        <span class="nav-link-icon d-md-none d-lg-inline-block">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M12 12c2.8 0 5 2.2 5 5s-2.2 5 -5 5s-5 -2.2 -5 -5s2.2 -5 5 -5z" />
+                <path d="M12 2c-2.8 0 -5 2.2 -5 5s2.2 5 5 5s5 -2.2 5 -5s-2.2 -5 -5 -5z" />
+            </svg>
+        </span>
+        <span class="nav-link-title">Perfil</span>
+    </a>
+</li>
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#navbar-gestao" data-bs-toggle="dropdown"
                         data-bs-auto-close="false" role="button" aria-expanded="false">
