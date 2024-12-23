@@ -13,6 +13,7 @@ class Comentario extends Model
         'candidato_id',
         'job_post_id',
         'comentario',
+        'empregador_id',
     ];
 
     public function jobPost()
@@ -24,5 +25,9 @@ class Comentario extends Model
     {
         return $this->belongsTo(Candidato::class);
     }
-    
+    public function empregador()
+{
+    return $this->belongsTo(Empregador::class);
+}
+
 }

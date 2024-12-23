@@ -12,6 +12,7 @@ class JobPostLike extends Model
     protected $fillable = [
         'candidato_id',
         'job_post_id',
+        'empregador_id', 
     ];
 
     public function jobPost()
@@ -23,5 +24,9 @@ class JobPostLike extends Model
     {
         return $this->belongsTo(Candidato::class);
     }
-    
+    public function empregador()
+{
+    return $this->belongsTo(Empregador::class);
+}
+
 }

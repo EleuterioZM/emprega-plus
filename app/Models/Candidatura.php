@@ -25,5 +25,10 @@ class Candidatura extends Model
     {
         return $this->belongsTo(Candidato::class);
     }
+    public function empregador()
+{
+    return $this->belongsTo(Empregador::class);
+}
+
     
 }

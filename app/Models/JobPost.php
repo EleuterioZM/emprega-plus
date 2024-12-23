@@ -36,4 +36,8 @@ public function comentarios()
 {
     return $this->hasMany(Comentario::class);
 }
+public function candidaturas()
+{
+    return $this->hasMany(Candidatura::class, 'job_post_id'); // A chave estrangeira em Candidatura
+}
 }

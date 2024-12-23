@@ -51,7 +51,7 @@ class EmpregadorController extends Controller
             // Processar a foto de perfil, se enviada
             if ($request->hasFile('profile_image')) {
                 Log::info('Arquivo de foto recebido. Processando...');
-    
+
                 $directoryPath = 'Empregadores_Profile';
     
                 // Remove a foto existente se necessário
@@ -112,6 +112,4 @@ class EmpregadorController extends Controller
                          ->with('success', 'Status do empregador alterado com sucesso!')
                          ->with('alert_type', 'warning');
     }
-    
-   
 }
